@@ -121,9 +121,9 @@ The application implements a sophisticated prerequisites validation system that:
 
 3. Run the development server:
    ```
-npm run dev
-# or
-yarn dev
+   npm run dev
+   # or
+   yarn dev
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
