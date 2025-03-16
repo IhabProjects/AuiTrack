@@ -1,26 +1,186 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Modern color palette */
+  --primary: 139, 92, 246;    /* Purple */
+  --secondary: 59, 130, 246;  /* Blue */
+  --accent: 236, 72, 153;     /* Pink */
+  --surface: 17, 24, 39;      /* Dark background */
+  --elevated: 31, 41, 55;     /* Slightly lighter surface */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+  background: rgb(var(--surface));
+  min-height: 100vh;
+  background-image:
+    radial-gradient(at 100% 0%, rgba(var(--primary), 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(var(--secondary), 0.1) 0px, transparent 50%);
+}
+
+/* Force proper stacking context */
+#__next {
+  isolation: isolate;
+}
+
+/* Base card styles */
+.base-card {
+  @apply relative overflow-hidden rounded-2xl;
+  background: rgba(var(--elevated), 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Semester card specific styles */
+.semester-card {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.semester-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 15px rgba(var(--primary), 0.1);
+}
+
+/* Modal portal container */
+#modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 999997;
+  pointer-events: none;
+}
+
+#modal-root > * {
+  pointer-events: auto;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary), 0.3);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--primary), 0.5);
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Animation utilities */
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--primary), 0) 0%,
+    rgba(var(--primary), 0.1) 50%,
+    rgba(var(--primary), 0) 100%
+  );
+  background-size: 2000px 100%;
+  animation: shimmer 8s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* Glass card effect */
+.glass-card {
+  @apply base-card;
+  background: rgba(var(--elevated), 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(var(--primary), 0.1);
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-4 py-2 rounded-lg transition-all duration-300;
+  background: rgba(var(--primary), 0.1);
+  border: 1px solid rgba(var(--primary), 0.2);
+  color: rgb(var(--primary));
+}
+
+.btn-primary:hover {
+  background: rgba(var(--primary), 0.2);
+  border-color: rgba(var(--primary), 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--primary), 0.1);
+}
+
+/* Text effects */
+.text-gradient {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(
+    135deg,
+    rgb(var(--primary)) 0%,
+    rgb(var(--secondary)) 50%,
+    rgb(var(--accent)) 100%
+  );
+}
+
+/* Modal elevation */
+.modal-elevation {
+  transform: translateZ(100px);
+  will-change: transform;
+}
+
+/* Interactive hover effects */
+.interactive-hover {
+  @apply transition-all duration-300;
+  position: relative;
+  overflow: hidden;
+}
+
+.interactive-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(var(--primary), 0.1) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.interactive-hover:hover::after {
+  opacity: 1;
 }
