@@ -108,8 +108,8 @@ The application implements a sophisticated prerequisites validation system that:
 ### Installation
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/aui-track.git
-   cd aui-track
+   git clone https://github.com/IhabProjects/AuiTrack.git
+   cd AuiTrack
    ```
 
 2. Install dependencies:
